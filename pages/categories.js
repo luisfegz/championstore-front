@@ -50,27 +50,27 @@ const ShowAllSquare = styled(Link)`
     text-decoration: none;
 `;
 
-export default function CategoriesPage({mainCategories,categoriesProducts,wishedProducts=[]}) {
+export default function CategoriesPage({ mainCategories, categoriesProducts, wishedProducts = [] }) {
     return (
         <>
-            <Header/>
+            <Header />
             <Center>
-                {mainCategories.map(cat => (
-                    <CategoryWrapper>
+                {mainCategories.map((cat) => (
+                    <CategoryWrapper key={cat._id}>
                         <CategoryTitle>
                             <h2>{cat.name}</h2>
                             <div>
-                                <Link href={'/category/'+cat._id}>Show All</Link>
+                                <Link href={'/category/' + cat._id}>Show All</Link>
                             </div>
                         </CategoryTitle>
                         <CategoryGrid>
-                            {categoriesProducts[cat._id].map((p,index) => (
-                                <RevealWrapper delay={index*50}>
+                            {categoriesProducts[cat._id].map((p, index) => (
+                                <RevealWrapper key={p._id} delay={index * 50}>
                                     <ProductBox {...p} wished={wishedProducts.includes(p._id)} />
                                 </RevealWrapper>
                             ))}
-                            <RevealWrapper delay={categoriesProducts[cat._id].length*50}>
-                                <ShowAllSquare href={'/category/'+cat._id}>
+                            <RevealWrapper key={`${cat._id}-showall`} delay={categoriesProducts[cat._id].length * 50}>
+                                <ShowAllSquare href={'/category/' + cat._id}>
                                     Show all &rarr;
                                 </ShowAllSquare>
                             </RevealWrapper>
