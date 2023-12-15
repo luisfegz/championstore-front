@@ -50,13 +50,13 @@ const ShowAllSquare = styled(Link)`
   text-decoration: none;
 `;
 
-export default function CategoriesPage({mainCategories,categoriesProducts,wishedProducts=[]}) {
+export default function CategoriesPage({mainCategories, categoriesProducts, wishedProducts=[]}) {
   return (
     <>
       <Header />
       <Center>
         {mainCategories.map(cat => (
-          <CategoryWrapper>
+          <CategoryWrapper key={cat._id}>
             <CategoryTitle>
               <h2>{cat.name}</h2>
               <div>
@@ -64,12 +64,12 @@ export default function CategoriesPage({mainCategories,categoriesProducts,wished
               </div>
             </CategoryTitle>
             <CategoryGrid>
-              {categoriesProducts[cat._id].map((p,index) => (
-                <RevealWrapper delay={index*50}>
+              {categoriesProducts[cat._id].map((p, index) => (
+                <RevealWrapper key={p._id} delay={index * 50}>
                   <ProductBox {...p} wished={wishedProducts.includes(p._id)} />
                 </RevealWrapper>
               ))}
-              <RevealWrapper delay={categoriesProducts[cat._id].length*50}>
+              <RevealWrapper key={`${cat._id}-showall`} delay={categoriesProducts[cat._id].length * 50}>
                 <ShowAllSquare href={'/category/'+cat._id}>
                   Show all &rarr;
                 </ShowAllSquare>
@@ -98,7 +98,6 @@ export async function getServerSideProps(ctx) {
     allFetchedProductsId.push(...products.map(p => p._id.toString()))
     categoriesProducts[mainCat._id] = products;
   }
-
 
   const session = await getServerSession(ctx.req, ctx.res, authOptions);
   const wishedProducts = session?.user
