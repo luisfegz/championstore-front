@@ -133,16 +133,18 @@ export default function CartPage() {
     const countryValue = document.getElementById("country").value;
     const cartText = getCartText();
 
+    const streetAddressEncoded = encodeURIComponent(streetAddressValue);
+
     const url = "https://wa.me/3023639624?text="
       + "Hola ¡Champion Store! Estos son mis datos de compra:" + "%0a"
       + "Nombre: " + nameValue + "%0a"
       + "Ciudad: " + cityValue + "%0a"
       + "Código postal: " + postalCodeValue + "%0a"
       + "Email: " + emailValue + "%0a"
-      + "Dirección: " + streetAddressValue + "%0a"
+      + "Dirección: " + streetAddressEncoded + "%0a"
       + "País: " + countryValue + "%0a%0a"
       + "Productos: " + "%0a" + cartText;
-
+  
     window.open(url, '_blank').focus();
   }
 
