@@ -13,14 +13,24 @@ const CategoryHeader = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
-    h1{
+    flex-wrap: wrap; // Add wrap to allow for responsive adjustments
+    margin-bottom: 1rem; // Add some space between header and filters
+
+    h1 {
         font-size: 1.5em;
+        margin: 10px 0; // Ensure the title has space around on small screens
     }
 `;
 
 const FiltersWrapper = styled.div`
     display: flex;
     gap: 15px;
+    flex-wrap: wrap; // Allow items to wrap in smaller screens
+
+    @media (max-width: 768px) { // Adjust for tablet and down to mobile
+        width: 100%;
+        justify-content: space-evenly; // Evenly space filters on smaller screens
+    }
 `;
 
 const Filter = styled.div`
@@ -29,15 +39,25 @@ const Filter = styled.div`
     border-radius: 5px;
     display: flex;
     gap: 5px;
+    align-items: center; // Align items to center in flex container
     color: #444;
+
     select {
         background-color: transparent;
         border: 0;
         font-size: inherit;
         color: #444;
+        padding: 5px; // Add padding for better touch target on mobile
+        -webkit-appearance: none; // Removes default styling on iOS
+        appearance: none;
+    }
+
+    @media (max-width: 768px) {
+        flex-basis: 100%; // Full width on smaller screens
+        justify-content: space-between; // Space out label and select
+        padding: 10px; // Larger padding on smaller screens
     }
 `;
-
 export default function CategoryPage({
     category,subCategories,products:originalProducts
 }) {
