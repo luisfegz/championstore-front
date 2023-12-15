@@ -4,7 +4,7 @@ import WhiteBox from "@/components/WhiteBox";
 import StarsRating from "@/components/StarsRating";
 import Textarea from "@/components/Textarea";
 import Button from "@/components/Button";
-import {useEffect, useState} from "react";
+import { useEffect, useState, useCallback } from "react";
 import axios from "axios";
 import Spinner from "@/components/Spinner";
 
@@ -52,14 +52,28 @@ const ReviewHeader = styled.div`
   }
 `;
 
-export default function ProductReviews({product}) {
-  const [title,setTitle] = useState('');
-  const [description,setDescription] = useState('');
-  const [stars,setStars] = useState(0);
-  const [reviews,setReviews] = useState([]);
-  const [reviewsLoading,setReviewsLoading] = useState(false);
+export default function ProductReviews({ product }) {
+  const [title, setTitle] = useState('');
+  const [description, setDescription] = useState('');
+  const [stars, setStars] = useState(0);
+  const [reviews, setReviews] = useState([]);
+  const [reviewsLoading, setReviewsLoading] = useState(false);
+
+  const loadReviews = useCallback(() => {
+    setReviewsLoading(true);
+    axios.get('/api/reviews?product='+product._id)
+      .then(res => {
+        setReviews(res.data);
+        setReviewsLoading(false);
+      });
+  }, [product._id]);
+
+  useEffect(() => {
+    loadReviews();
+  }, [loadReviews]);
+
   function submitReview() {
-    const data = {title,description,stars,product:product._id};
+    const data = {title, description, stars, product: product._id};
     axios.post('/api/reviews', data).then(res => {
       setTitle('');
       setDescription('');
@@ -67,16 +81,7 @@ export default function ProductReviews({product}) {
       loadReviews();
     });
   }
-  useEffect(() => {
-    loadReviews();
-  }, []);
-  function loadReviews() {
-    setReviewsLoading(true);
-    axios.get('/api/reviews?product='+product._id).then(res => {
-      setReviews(res.data);
-      setReviewsLoading(false);
-    });
-  }
+
   return (
     <div>
       <Title>Reviews</Title>
@@ -110,7 +115,7 @@ export default function ProductReviews({product}) {
               <p>No reviews :(</p>
             )}
             {reviews.length > 0 && reviews.map(review => (
-              <ReviewWrapper>
+              <ReviewWrapper key={review._id}>
                 <ReviewHeader>
                   <StarsRating size={'sm'} disabled={true} defaultHowMany={review.stars} />
                   <time>{(new Date(review.createdAt)).toLocaleString('sv-SE')}</time>
