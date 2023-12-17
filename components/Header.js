@@ -14,10 +14,17 @@ const StyledHeader = styled.header`
   z-index: 10;
 `;
 const Logo = styled(Link)`
+    display: inline-block; // Hace que el enlace se comporte como un contenedor en línea
+    padding: 5px 0; // Añade un poco de espacio arriba y abajo, ajusta según sea necesario
     color:#fff;
     text-decoration:none;
     position: relative;
     z-index: 3;
+`;
+
+const LogoImage = styled.img`
+    height: 30px; // Ajusta la altura a lo que sea adecuado para tu diseño
+    width: auto; // Mantiene la proporción de la imagen
 `;
 
 const Wrapper = styled.div`
@@ -95,11 +102,6 @@ const SideIcons = styled.div`
         min-width: 30px;
         padding: 0;
     }
-`;
-
-const LogoImage = styled.img`
-    height: 50px; // Ajusta esto a la altura deseada
-    width: auto; // Esto mantendrá las proporciones del logo
 `;
 
 export default function Header() {
