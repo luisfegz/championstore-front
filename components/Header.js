@@ -13,33 +13,27 @@ const StyledHeader = styled.header`
   top: 0;
   z-index: 10;
 `;
-const Logo = styled(Link)`
-    display: inline-block; // Hace que el enlace se comporte como un contenedor en línea
-    padding: 5px 0; // Añade un poco de espacio arriba y abajo, ajusta según sea necesario
-    color:#fff;
-    text-decoration:none;
-    position: relative;
-    z-index: 3;
-`;
 
-const LogoImage = styled.img`
-    height: 30px; // Ajusta la altura a lo que sea adecuado para tu diseño
-    width: auto; // Mantiene la proporción de la imagen
+const Logo = styled.a`
+  color: #fff;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
 `;
 
 const Wrapper = styled.div`
-    display: flex;
-    justify-content: space-between;
-    padding: 20px 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 20px 0;
 `;
 
 const StyledNav = styled.nav`
-    ${props => props.$mobileNavActive ? `
-        display: block;
-    ` : `
-        display: none;
-    ` }
-    gap: 15px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  @media screen and (max-width: 767px) {
+    display: ${props => props.$mobileNavActive ? 'flex' : 'none'};
     position: fixed;
     top: 0;
     bottom: 0;
@@ -47,74 +41,46 @@ const StyledNav = styled.nav`
     right: 0;
     padding: 70px 20px 20px;
     background-color: #222;
-    @media screen and (min-width: 768px) {
-        display: flex;
-        position: static;
-        padding: 0;
-    }
+    flex-direction: column;
+  }
 `;
 
 const NavLink = styled(Link)`
-    display: block;
-    color: #aaa;
-    text-decoration:none;
-    min-width: 30px;
-    padding: 10px 0;
-    svg{
-        height: 20px;
-    }
-    @media screen and (min-width: 768px) {
-        padding: 0;
-    }
+  color: #aaa;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
 `;
 
 const NavButton = styled.button`
-    background-color: transparent;
-    width: 30px;
-    height: 30px;
-    border: 0;
-    color: white;
-    cursor: pointer;
-    position: relative;
-    z-index: 3;
-    @media screen and (min-width: 768px) {
-        display: none;
-    }
+  background-color: transparent;
+  border: none;
+  color: white;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  @media screen and (min-width: 768px) {
+    display: none;
+  }
 `;
 
 const SideIcons = styled.div`
-    display: flex;
-    align-items: center;
-    gap: 9px;
-    a{
-        display: inline-block;
-        min-width: 20px;
-        color: white;
-        svg{
-            width: 14px;
-            height: 14px;
-        }
-    }
-    Link{
-        display: block;
-        color: #aaa;
-        text-decoration:none;
-        min-width: 30px;
-        padding: 0;
-    }
+  display: flex;
+  align-items: center;
+  gap: 9px;
 `;
 
 export default function Header() {
-    const {cartProducts} = useContext(CartContext);
+    const { cartProducts } = useContext(CartContext);
     const [mobileNavActive, setMobileNavActive] = useState(false);
+
     return (
         <StyledHeader>
             <Center>
                 <Wrapper>
                     <Logo href={'/'}>
-                        <LogoImage src="/favicon.ico" alt="Champion Store Logo" />
+                        <img src="/favicon.ico" alt="Champion Store Logo" style={{ height: '30px' }} />
                     </Logo>
-                    <Logo href={'/'}>Champion Store</Logo>
                     <StyledNav $mobileNavActive={mobileNavActive}>
                         <NavLink href={'/'}>Home</NavLink>
                         <NavLink href={'/products'}>All products</NavLink>
@@ -122,8 +88,12 @@ export default function Header() {
                         <NavLink href={'/account'}>Account</NavLink>
                     </StyledNav>
                     <SideIcons>
-                        <Link href={'/search'}><SearchIcon /></Link>
-                        <NavLink href={'/cart'}><CartShop />({cartProducts.length})</NavLink>
+                        <Link href={'/search'} passHref>
+                            <a><SearchIcon /></a>
+                        </Link>
+                        <Link href={'/cart'} passHref>
+                            <a><CartShop />({cartProducts.length})</a>
+                        </Link>
                         <NavButton onClick={() => setMobileNavActive(prev => !prev)}>
                             <BarsIcon />
                         </NavButton>
