@@ -58,11 +58,19 @@ const NavButton = styled.button`
     height: 30px;
     border: 0;
     color: white;
+    svg {
+        width: 20px; // Tamaño base para escritorio
+        height: 20px; // Tamaño base para escritorio
+    }
     cursor: pointer;
     position: relative;
     z-index: 3;
     @media screen and (min-width: 768px) {
         display: none;
+        svg {
+            width: 24px; // Tamaño ajustado para móviles
+            height: 24px; // Tamaño ajustado para móviles
+        }
     }
 `;
 
