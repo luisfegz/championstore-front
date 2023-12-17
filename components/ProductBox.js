@@ -120,7 +120,7 @@ export default function ProductBox({
         <Title href={url}>{title}</Title>
         <PriceRow>
           <Price>
-            ${formatPrice(price)}COP
+            ${formatPrice(price)} COP
           </Price>
           <FlyingButton _id={_id} src={images?.[0]}>Add to cart</FlyingButton>
         </PriceRow>
