@@ -104,6 +104,9 @@ export default function Header() {
         <StyledHeader>
             <Center>
                 <Wrapper>
+                    <Logo href={'/'}>
+                        <img src="/favicon.ico" alt="Champion Store Logo" />
+                    </Logo>
                     <Logo href={'/'}>Champion Store</Logo>
                     <StyledNav $mobileNavActive={mobileNavActive}>
                         <NavLink href={'/'}>Home</NavLink>
