@@ -97,6 +97,11 @@ const SideIcons = styled.div`
     }
 `;
 
+const LogoImage = styled.img`
+    height: 50px; // Ajusta esto a la altura deseada
+    width: auto; // Esto mantendrá las proporciones del logo
+`;
+
 export default function Header() {
     const {cartProducts} = useContext(CartContext);
     const [mobileNavActive, setMobileNavActive] = useState(false);
@@ -105,7 +110,7 @@ export default function Header() {
             <Center>
                 <Wrapper>
                     <Logo href={'/'}>
-                        <img src="/favicon.ico" alt="Champion Store Logo" />
+                        <LogoImage src="/favicon.ico" alt="Champion Store Logo" />
                     </Logo>
                     <Logo href={'/'}>Champion Store</Logo>
                     <StyledNav $mobileNavActive={mobileNavActive}>
