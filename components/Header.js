@@ -65,9 +65,25 @@ const NavButton = styled.button`
 `;
 
 const SideIcons = styled.div`
-  display: flex;
-  align-items: center;
-  gap: 9px;
+    display: flex;
+    align-items: center;
+    gap: 9px;
+    a{
+        display: inline-block;
+        min-width: 20px;
+        color: white;
+        svg{
+            width: 14px;
+            height: 14px;
+        }
+    }
+    Link{
+        display: block;
+        color: #aaa;
+        text-decoration:none;
+        min-width: 30px;
+        padding: 0;
+    }
 `;
 
 export default function Header() {
@@ -88,10 +104,10 @@ export default function Header() {
                         <NavLink href={'/account'}>Account</NavLink>
                     </StyledNav>
                     <SideIcons>
-                        <Link href={'/search'} passHref>
+                        <Link href={'/search'}>
                             <SearchIcon />
                         </Link>
-                        <NavLink href={'/cart'} passHref>
+                        <NavLink href={'/cart'}>
                             <CartShop />({cartProducts.length})
                         </NavLink>
                         <NavButton onClick={() => setMobileNavActive(prev => !prev)}>
