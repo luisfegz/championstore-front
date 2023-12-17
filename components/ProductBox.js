@@ -11,7 +11,7 @@ import HeartSolidIcon from "@/components/icons/HeartSolidIcon";
 import axios from "axios";
 
 const ProductWrapper = styled.div`
-  button{
+  button {
     width: 100%;
     text-align: center;
     justify-content: center;
@@ -28,7 +28,7 @@ const WhiteBox = styled(Link)`
   justify-content: center;
   border-radius: 10px;
   position: relative;
-  img{
+  img {
     max-width: 100%;
     max-height: 80px;
   }
@@ -36,10 +36,10 @@ const WhiteBox = styled(Link)`
 
 const Title = styled(Link)`
   font-weight: normal;
-  font-size:.9rem;
-  color:inherit;
-  text-decoration:none;
-  margin:0;
+  font-size: .9rem;
+  color: inherit;
+  text-decoration: none;
+  margin: 0;
 `;
 
 const ProductInfoBox = styled.div`
@@ -53,47 +53,48 @@ const PriceRow = styled.div`
     gap: 5px;
   }
   align-items: center;
-  justify-content:space-between;
-  margin-top:2px;
+  justify-content: space-between;
+  margin-top: 2px;
 `;
 
 const Price = styled.div`
   font-size: 1rem;
-  font-weight:400;
+  font-weight: 400;
   text-align: right;
   @media screen and (min-width: 768px) {
     font-size: 1.2rem;
-    font-weight:600;
+    font-weight: 600;
     text-align: left;
   }
 `;
 
 const WishlistButton = styled.button`
-  border:0;
+  border: 0;
   width: 40px !important;
   height: 40px;
   padding: 10px;
   position: absolute;
-  top:0;
-  right:0;
-  background:transparent;
+  top: 0;
+  right: 0;
+  background: transparent;
   cursor: pointer;
-  ${props => props.wished ? `
-    color:red;
-  ` : `
-    color:black;
-  `}
-  svg{
+  color: ${props => props.wished ? 'red' : 'black'};
+  svg {
     width: 16px;
   }
 `;
 
 export default function ProductBox({
-  _id,title,description,price,images,wished=false,
-  onRemoveFromWishlist=()=>{},
+  _id, title, description, price, images, wished = false,
+  onRemoveFromWishlist = () => {},
 }) {
-  const url = '/product/'+_id;
-  const [isWished,setIsWished] = useState(wished);
+  const url = '/product/' + _id;
+  const [isWished, setIsWished] = useState(wished);
+
+  function formatPrice(value) {
+    return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  }
+
   function addToWishlist(ev) {
     ev.preventDefault();
     ev.stopPropagation();
@@ -101,11 +102,10 @@ export default function ProductBox({
     if (nextValue === false && onRemoveFromWishlist) {
       onRemoveFromWishlist(_id);
     }
-    axios.post('/api/wishlist', {
-      product: _id,
-    }).then(() => {});
+    axios.post('/api/wishlist', { product: _id }).then(() => {});
     setIsWished(nextValue);
   }
+
   return (
     <ProductWrapper>
       <WhiteBox href={url}>
@@ -113,14 +113,14 @@ export default function ProductBox({
           <WishlistButton wished={isWished} onClick={addToWishlist}>
             {isWished ? <HeartSolidIcon /> : <HeartOutlineIcon />}
           </WishlistButton>
-          <img src={images?.[0]} alt=""/>
+          {images?.[0] && <img src={images[0]} alt={title} />}
         </div>
       </WhiteBox>
       <ProductInfoBox>
         <Title href={url}>{title}</Title>
         <PriceRow>
           <Price>
-            ${price}
+            ${formatPrice(price)}
           </Price>
           <FlyingButton _id={_id} src={images?.[0]}>Add to cart</FlyingButton>
         </PriceRow>
