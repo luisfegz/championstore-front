@@ -53,15 +53,17 @@ const NavLink = styled(Link)`
 `;
 
 const NavButton = styled.button`
-  background-color: transparent;
-  border: none;
-  color: white;
-  cursor: pointer;
-  display: inline-flex;
-  align-items: center;
-  @media screen and (min-width: 768px) {
-    display: none;
-  }
+    background-color: transparent;
+    width: 30px;
+    height: 30px;
+    border: 0;
+    color: white;
+    cursor: pointer;
+    position: relative;
+    z-index: 3;
+    @media screen and (min-width: 768px) {
+        display: none;
+    }
 `;
 
 const SideIcons = styled.div`
