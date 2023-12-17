@@ -120,7 +120,7 @@ export default function CartPage() {
     let cartText = '';
     for (const product of products) {
       const quantity = cartProducts.filter(id => id === product._id).length;
-      cartText += '- ' + product.title + ' (Cantidad: ' + quantity + ', Precio: ' + (quantity * product.price + ' mil COP') + ')%0a';
+      cartText += '- ' + product.title + ' (Cantidad: ' + quantity + ', Precio: ' + (quantity * product.price + 'COP') + ')%0a';
     }
 
     let domicilio = city === 'Cali' ? DOMICILIO_CALI : 7000; // Ajuste de domicilio basado en la ciudad
