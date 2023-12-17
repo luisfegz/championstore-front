@@ -78,7 +78,7 @@ const NavButton = styled.button`
 const SideIcons = styled.div`
     display: flex;
     align-items: center;
-    gap: 5px;
+    gap: 15px;
     a{
         display: inline-block;
         min-width: 20px;
