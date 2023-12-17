@@ -119,7 +119,7 @@ export default function CartPage() {
       const quantity = cartProducts.filter(id => id === product._id).length;
       cartText += '- ' + product.title + ' (Cantidad: ' + quantity + ', Precio: ' + (quantity * product.price + ' mil COP') + ')%0a';
     }
-    cartText += '%0a' + 'Total: $' + total + 'mil COP%0a';
+    cartText += '%0a' + 'Total: $' + total + 'COP%0a';
     cartText += 'Domicilio 5mil COP (Sur de Cali) otras areas 7milCOP%0a';
     cartText += 'Domicilios a todo el País %0a';
     return cartText;
