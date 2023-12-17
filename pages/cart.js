@@ -64,6 +64,9 @@ const CityHolder = styled.div`
   gap: 5px;
 `;
 
+// Constante para el costo de domicilio en Cali
+const DOMICILIO_CALI = 5000;
+
 export default function CartPage() {
   const { cartProducts, addProduct, removeProduct, clearCart } = useContext(CartContext);
   const [products, setProducts] = useState([]);
@@ -119,8 +122,10 @@ export default function CartPage() {
       const quantity = cartProducts.filter(id => id === product._id).length;
       cartText += '- ' + product.title + ' (Cantidad: ' + quantity + ', Precio: ' + (quantity * product.price + ' mil COP') + ')%0a';
     }
-    cartText += '%0a' + 'Total: $' + total + 'COP%0a';
-    cartText += 'Domicilio 5mil COP (Sur de Cali) otras areas 7milCOP%0a';
+
+    let domicilio = city === 'Cali' ? DOMICILIO_CALI : 7000; // Ajuste de domicilio basado en la ciudad
+    cartText += '%0a' + 'Total: $' + (total + domicilio) + ' COP%0a';
+    cartText += 'Domicilio: $' + domicilio + ' COP%0a';
     cartText += 'Domicilios a todo el País %0a';
     return cartText;
   }
@@ -154,6 +159,8 @@ export default function CartPage() {
     const price = products.find(p => p._id === productId)?.price || 0;
     total += price;
   }
+
+  total += city === 'Cali' ? DOMICILIO_CALI : 7000;
 
   if (isSuccess) {
     return (
@@ -219,7 +226,7 @@ export default function CartPage() {
                     <tr>
                       <td></td>
                       <td></td>
-                      <td>${total}</td>
+                      <td>Total: ${total}</td>
                     </tr>
                   </tbody>
                 </Table>
@@ -267,7 +274,7 @@ export default function CartPage() {
                   placeholder="Country" 
                   value={country}
                   name="country" 
-                  onChange={ev => setCountry(ev.target.value)}/>
+                                    onChange={ev => setCountry(ev.target.value)}/>
                 <Button black
                   block
                   onClick={gotowhatsapp}>
