@@ -78,7 +78,7 @@ const NavButton = styled.button`
 const SideIcons = styled.div`
     display: flex;
     align-items: center;
-    gap: 15px;
+    gap: 8px;
     a{
         display: inline-block;
         min-width: 20px;
@@ -112,7 +112,7 @@ export default function Header() {
                         <NavLink href={'/account'}>Account</NavLink>
                     </StyledNav>
                     <SideIcons>
-                        <NavLink href={'/cart'}><CartShop /> ({cartProducts.length})</NavLink>
+                        <Link href={'/cart'}><CartShop /> ({cartProducts.length})</Link>
                         <Link href={'/search'}><SearchIcon /></Link>
                         <NavButton onClick={() => setMobileNavActive(prev => !prev)}>
                             <BarsIcon />
