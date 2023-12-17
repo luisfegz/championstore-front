@@ -5,6 +5,7 @@ import { useContext, useState } from "react";
 import { CartContext } from "@/components/CartContext";
 import BarsIcon from "@/components/icons/Bars";
 import SearchIcon from "@/components/icons/SearchIcon";
+import CartShop from "./icons/CartShop";
 
 const StyledHeader = styled.header`
   background-color: #222;
@@ -101,9 +102,9 @@ export default function Header() {
                         <NavLink href={'/products'}>All products</NavLink>
                         <NavLink href={'/categories'}>Categories</NavLink>
                         <NavLink href={'/account'}>Account</NavLink>
-                        <NavLink href={'/cart'}>Cart ({cartProducts.length})</NavLink>
                     </StyledNav>
                     <SideIcons>
+                        <NavLink href={'/cart'}><CartShop /> ({cartProducts.length})</NavLink>
                         <Link href={'/search'}><SearchIcon /></Link>
                         <NavButton onClick={() => setMobileNavActive(prev => !prev)}>
                             <BarsIcon />
