@@ -88,6 +88,13 @@ const SideIcons = styled.div`
             height: 14px;
         }
     }
+    Link{
+        display: block;
+        color: #aaa;
+        text-decoration:none;
+        min-width: 30px;
+        padding: 0;
+    }
 `;
 
 export default function Header() {
