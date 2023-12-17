@@ -8,6 +8,7 @@ import axios from "axios";
 import Table from "@/components/Table";
 import Input from "@/components/Input";
 import { RevealWrapper } from "next-reveal";
+import Footer from "@/components/Footer";
 
 const ColumnsWrapper = styled.div`
   display: grid;
@@ -277,6 +278,9 @@ export default function CartPage() {
           )}
         </ColumnsWrapper>
       </Center>
+      <br />
+      <br />
+      <Footer />
     </>
   );
 }

@@ -15,6 +15,8 @@ export default function HomePage({featuredProduct,newProducts,wishedNewProducts}
       <Header />
       <Featured product={featuredProduct} />
       <NewProducts products={newProducts} wishedProducts={wishedNewProducts} />
+      <br />
+      <br />
       <Footer />
     </div>
   );

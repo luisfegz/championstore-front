@@ -114,12 +114,12 @@ export default function Header() {
                         <NavLink href={'/account'}>Account</NavLink>
                     </StyledNav>
                     <SideIcons>
-                        <Link href={'/search'}>
-                            <SearchIcon />
-                        </Link>
                         <NavLink href={'/cart'}>
                             <CartShop />({cartProducts.length})
                         </NavLink>
+                        <Link href={'/search'}>
+                            <SearchIcon />
+                        </Link>
                         <NavButton onClick={() => setMobileNavActive(prev => !prev)}>
                             <BarsIcon />
                         </NavButton>
