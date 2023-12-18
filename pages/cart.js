@@ -64,8 +64,7 @@ const CityHolder = styled.div`
   gap: 5px;
 `;
 
-const DOMICILIO_CALI = 7000;
-const DOMICILIO_OTRAS_CIUDADES = 15000;
+const COSTO_DOMICILIO = 8000;
 
 export default function CartPage() {
   const { cartProducts, addProduct, removeProduct, clearCart } = useContext(CartContext);
@@ -125,16 +124,15 @@ export default function CartPage() {
       return `- ${product.title} (Cantidad: ${quantity}, Precio: ${formatPrice(quantity * product.price)} COP)`;
     }).join("%0a");
 
-    let shippingCost = city === 'Cali' ? DOMICILIO_CALI : DOMICILIO_OTRAS_CIUDADES;
-    cartText += `%0a%0aTotal: $${formatPrice(total + shippingCost)} COP`;
-    cartText += `%0aDomicilio: $${formatPrice(shippingCost)} COP`;
-    cartText += `%0aDomicilios a todo el País`;
+    cartText += `%0a%0aTotal: $${formatPrice(total + COSTO_DOMICILIO)} COP`;
+    cartText += `%0aDomicilio: $${formatPrice(COSTO_DOMICILIO)} COP`;
+    // Comentario sobre el domicilio
+    cartText += `%0a%0a*El domicilio en la ciudad de Cali tiene un valor de $8000 COP. Para otras partes, se acuerda con la empresa de despacho.*`;
     return cartText;
   }
 
   async function gotowhatsapp() {
-    const nameValue = document.getElementById("name").value;
-    const cityValue = document.getElementById("city").value;
+    const nameValue = document.getElementById("city").value;
     const postalCodeValue = document.getElementById("postalCode").value;
     const emailValue = document.getElementById("email").value;
     const streetAddressValue = document.getElementById("streetAddress").value;
@@ -167,8 +165,7 @@ export default function CartPage() {
     total += quantity * product.price;
   });
 
-  const shippingCost = city === 'Cali' ? DOMICILIO_CALI : DOMICILIO_OTRAS_CIUDADES;
-  total += shippingCost;
+  total += COSTO_DOMICILIO;
 
   if (isSuccess) {
     return (
@@ -257,4 +254,3 @@ export default function CartPage() {
     </>
   );
 }
-    
