@@ -105,7 +105,8 @@ export default function Header() {
             <Center>
                 <Wrapper>
                     <Logo href={'/'}>
-                        <img src="/favicon.ico" alt="Champion Store Logo" style={{ height: '30px' }} />
+                        TRUE SUPREMACY
+                        // <img src="/favicon.ico" alt="Champion Store Logo" style={{ height: '30px' }} />
                     </Logo>
                     <StyledNav $mobileNavActive={mobileNavActive}>
                         <NavLink href={'/'}>Home</NavLink>
