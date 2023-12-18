@@ -132,7 +132,7 @@ export default function CartPage() {
 
   async function gotowhatsapp() {
     const nameValue = document.getElementById("name").value;
-    const cityValue = document.getElementById("city").value;
+    const cityValue = document.getElementById("city")    .value;
     const postalCodeValue = document.getElementById("postalCode").value;
     const emailValue = document.getElementById("email").value;
     const streetAddressValue = document.getElementById("streetAddress").value;
@@ -174,6 +174,7 @@ export default function CartPage() {
             </Box>
           </ColumnsWrapper>
         </Center>
+        <Footer />
       </>
     );
   }
@@ -274,11 +275,9 @@ export default function CartPage() {
                   placeholder="Country" 
                   value={country}
                   name="country" 
-                                    onChange={ev => setCountry(ev.target.value)}/>
-                <Button black
-                  block
-                  onClick={gotowhatsapp}>
-                    Continue to payment
+                  onChange={ev => setCountry(ev.target.value)}/>
+                                  <Button black block onClick={gotowhatsapp}>
+                  Continue to WhatsApp Order
                 </Button>
               </Box>
             </RevealWrapper>
