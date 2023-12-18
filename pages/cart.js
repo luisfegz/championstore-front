@@ -65,7 +65,7 @@ const CityHolder = styled.div`
 `;
 
 const DOMICILIO_CALI = 6500;
-const DOMICILIO_OTRAS_CIUDADES = "Acordar Empresa de Despachos";
+const DOMICILIO_OTRAS_CIUDADES = 15000;
 
 export default function CartPage() {
   const { cartProducts, addProduct, removeProduct, clearCart } = useContext(CartContext);
