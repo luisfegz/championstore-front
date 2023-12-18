@@ -64,7 +64,8 @@ const CityHolder = styled.div`
   gap: 5px;
 `;
 
-const DOMICILIO_CALI = 5000;
+const DOMICILIO_CALI = 7000;
+const DOMICILIO_OTRAS_CIUDADES = 15000;
 
 export default function CartPage() {
   const { cartProducts, addProduct, removeProduct, clearCart } = useContext(CartContext);
@@ -79,10 +80,9 @@ export default function CartPage() {
 
   useEffect(() => {
     if (cartProducts.length > 0) {
-      axios.post('/api/cart', { ids: cartProducts })
-        .then(response => {
-          setProducts(response.data);
-        });
+      axios.post('/api/cart', { ids: cartProducts }).then(response => {
+        setProducts(response.data);
+      });
     } else {
       setProducts([]);
     }
@@ -125,7 +125,7 @@ export default function CartPage() {
       return `- ${product.title} (Cantidad: ${quantity}, Precio: ${formatPrice(quantity * product.price)} COP)`;
     }).join("%0a");
 
-    let shippingCost = city === 'Cali' ? DOMICILIO_CALI : 7000;
+    let shippingCost = city === 'Cali' ? DOMICILIO_CALI : DOMICILIO_OTRAS_CIUDADES;
     cartText += `%0a%0aTotal: $${formatPrice(total + shippingCost)} COP`;
     cartText += `%0aDomicilio: $${formatPrice(shippingCost)} COP`;
     cartText += `%0aDomicilios a todo el País`;
@@ -135,8 +135,7 @@ export default function CartPage() {
   async function gotowhatsapp() {
     const nameValue = document.getElementById("name").value;
     const cityValue = document.getElementById("city").value;
-    const postalCodeValue 
-        = document.getElementById("postalCode").value;
+    const postalCodeValue = document.getElementById("postalCode").value;
     const emailValue = document.getElementById("email").value;
     const streetAddressValue = document.getElementById("streetAddress").value;
     const countryValue = document.getElementById("country").value;
@@ -168,7 +167,8 @@ export default function CartPage() {
     total += quantity * product.price;
   });
 
-  total += city === 'Cali' ? DOMICILIO_CALI : 7000;
+  const shippingCost = city === 'Cali' ? DOMICILIO_CALI : DOMICILIO_OTRAS_CIUDADES;
+  total += shippingCost;
 
   if (isSuccess) {
     return (
@@ -221,14 +221,14 @@ export default function CartPage() {
                             <QuantityLabel>{quantity}</QuantityLabel>
                             <Button onClick={() => moreOfThisProduct(product._id)}>+</Button>
                           </td>
-                          <td>${formatPrice(quantity * product.price)}</td>
+                          <td>${formatPrice(quantity * product.price)} COP</td>
                         </tr>
                       );
                     })}
                     <tr>
                       <td></td>
                       <td></td>
-                      <td>Total: ${formatPrice(total)}</td>
+                      <td>Total: ${formatPrice(total)} COP</td>
                     </tr>
                   </tbody>
                 </Table>
