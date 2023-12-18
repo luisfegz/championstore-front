@@ -126,7 +126,7 @@ export default function CartPage() {
     }).join("%0a");
 
     let shippingCost = city === 'Cali' ? DOMICILIO_CALI : DOMICILIO_OTRAS_CIUDADES;
-    cartText += `%0a%0aTotal: $${formatPrice(total + shippingCost)} COP`;
+    cartText += `%0a%0aTotal: $${formatPrice(total)} COP`;
     cartText += `%0aDomicilio en Cali: $${formatPrice(shippingCost)} COP`;
     return cartText;
   }
