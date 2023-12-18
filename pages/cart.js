@@ -79,10 +79,9 @@ export default function CartPage() {
 
   useEffect(() => {
     if (cartProducts.length > 0) {
-      axios.post('/api/cart', { ids: cartProducts })
-        .then(response => {
-          setProducts(response.data);
-        });
+      axios.post('/api/cart', { ids: cartProducts }).then(response => {
+        setProducts(response.data);
+      });
     } else {
       setProducts([]);
     }
@@ -92,15 +91,11 @@ export default function CartPage() {
     if (typeof window === 'undefined') {
       return;
     }
-    if (window?.location.href.includes('success')) {
+    if (window.location.href.includes('success')) {
       setIsSuccess(true);
       clearCart();
     }
   }, []);
-
-  function formatPrice(value) {
-    return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
-  }
 
   function moreOfThisProduct(id) {
     addProduct(id);
@@ -110,17 +105,64 @@ export default function CartPage() {
     removeProduct(id);
   }
 
-  let total = 0;
-  for (const productId of cartProducts) {
-    const product = products.find(p => p._id === productId);
-    const quantity = cartProducts.filter(id => id === productId).length;
-    if (product) {
-      total += quantity * product.price;
+  function formatPrice(value) {
+    return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  }
+
+  async function goToPayment() {
+    const response = await axios.post('/api/checkout', {
+      name, email, city, postalCode, streetAddress, country, cartProducts,
+    });
+    if (response.data.url) {
+      window.location.href = response.data.url;
     }
   }
 
-  const shippingCost = city === 'Cali' ? DOMICILIO_CALI : 7000;
-  total += shippingCost;
+  function getCartText() {
+    let cartText = '';
+    for (const product of products) {
+      const quantity = cartProducts.filter(id => id === product._id).length;
+      cartText += '- ' + product.title + ' (Cantidad: ' + quantity + ', Precio: ' + formatPrice(quantity * product.price) + ' COP)\\n';
+    }
+
+    let shippingCost = city === 'Cali' ? DOMICILIO_CALI : 7000;
+    cartText += '\\nTotal: $' + formatPrice(total + shippingCost) + ' COP\\n';
+    cartText += 'Domicilio: $' + formatPrice(shippingCost) + ' COP\\n';
+    cartText += 'Domicilios a todo el País\\n';
+    return cartText;
+  }
+
+  async function gotowhatsapp() {
+    const nameValue = document.getElementById("name").value;
+    const cityValue = document.getElementById("city").value;
+    const postalCodeValue = document.getElementById("postalCode").value;
+    const     emailValue = document.getElementById("email").value;
+    const streetAddressValue = document.getElementById("streetAddress").value;
+    const countryValue = document.getElementById("country").value;
+    const cartText = getCartText();
+
+    const streetAddressEncoded = encodeURIComponent(streetAddressValue);
+
+    const url = "https://wa.me/3023639624?text="
+      + "Hola ¡Champion Store! Estos son mis datos de compra:" + "%0a"
+      + "Nombre: " + nameValue + "%0a"
+      + "Ciudad: " + cityValue + "%0a"
+      + "Código postal: " + postalCodeValue + "%0a"
+      + "Email: " + emailValue + "%0a"
+      + "Dirección: " + streetAddressEncoded + "%0a"
+      + "País: " + countryValue + "%0a%0a"
+      + "Productos: " + "%0a" + cartText;
+  
+    window.open(url, '_blank').focus();
+  }
+
+  let total = 0;
+  products.forEach(product => {
+    const quantity = cartProducts.filter(id => id === product._id).length;
+    total += quantity * product.price;
+  });
+
+  total += city === 'Cali' ? DOMICILIO_CALI : 7000;
 
   if (isSuccess) {
     return (
@@ -153,7 +195,7 @@ export default function CartPage() {
                   <thead>
                     <tr>
                       <th>Product</th>
-                                            <th>Quantity</th>
+                      <th>Quantity</th>
                       <th>Price</th>
                     </tr>
                   </thead>
@@ -164,7 +206,7 @@ export default function CartPage() {
                         <tr key={product._id}>
                           <td>
                             <ProductImageBox>
-                              <img src={product.images[0]} alt={product.title}/>
+                              <img src={product.images[0]} alt={product.title} />
                             </ProductImageBox>
                             {product.title}
                           </td>
@@ -173,16 +215,14 @@ export default function CartPage() {
                             <QuantityLabel>{quantity}</QuantityLabel>
                             <Button onClick={() => moreOfThisProduct(product._id)}>+</Button>
                           </td>
-                          <td>
-                            ${formatPrice(quantity * product.price)}
-                          </td>
+                          <td>${formatPrice(quantity * product.price)}</td>
                         </tr>
                       );
                     })}
                     <tr>
                       <td></td>
-                      <td>Total:</td>
-                      <td>${formatPrice(total)}</td>
+                      <td></td>
+                      <td>Total: ${formatPrice(total)}</td>
                     </tr>
                   </tbody>
                 </Table>
@@ -201,9 +241,7 @@ export default function CartPage() {
                 <Input type="text" id="email" placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} />
                 <Input type="text" id="streetAddress" placeholder="Street Address" value={streetAddress} onChange={e => setStreetAddress(e.target.value)} />
                 <Input type="text" id="country" placeholder="Country" value={country} onChange={e => setCountry(e.target.value)} />
-                <Button onClick={() => {/* Logic to handle order submission */}}>
-                  Continue to WhatsApp Order
-                </Button>
+                <Button black block onClick={gotowhatsapp}>Continue to payment</Button>
               </Box>
             </RevealWrapper>
           )}
