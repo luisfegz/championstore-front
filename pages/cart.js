@@ -64,7 +64,8 @@ const CityHolder = styled.div`
   gap: 5px;
 `;
 
-const DOMICILIO = 7000;
+const DOMICILIO_CALI = 6500;
+const DOMICILIO_OTRAS_CIUDADES = 6500;
 
 export default function CartPage() {
   const { cartProducts, addProduct, removeProduct, clearCart } = useContext(CartContext);
@@ -124,9 +125,9 @@ export default function CartPage() {
       return `- ${product.title} (Cantidad: ${quantity}, Precio: ${formatPrice(quantity * product.price)} COP)`;
     }).join("%0a");
 
-    let shippingCost = DOMICILIO;
+    let shippingCost = city === 'Cali' ? DOMICILIO_CALI : DOMICILIO_OTRAS_CIUDADES;
     cartText += `%0a%0aTotal: $${formatPrice(total + shippingCost)} COP`;
-    cartText += `%0aDomicilio: $${formatPrice(shippingCost)} COP`;
+    cartText += `%0aDomicilio en Cali: $${formatPrice(shippingCost)} COP`;
     return cartText;
   }
 
@@ -165,6 +166,7 @@ export default function CartPage() {
     total += quantity * product.price;
   });
 
+  const shippingCost = city === 'Cali' ? DOMICILIO_CALI : DOMICILIO_OTRAS_CIUDADES;
   total += shippingCost;
 
   if (isSuccess) {
