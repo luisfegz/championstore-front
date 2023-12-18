@@ -65,7 +65,7 @@ const CityHolder = styled.div`
 `;
 
 const DOMICILIO_CALI = 6500;
-const DOMICILIO_OTRAS_CIUDADES = 6500;
+const DOMICILIO_OTRAS_CIUDADES = 0;
 
 export default function CartPage() {
   const { cartProducts, addProduct, removeProduct, clearCart } = useContext(CartContext);
@@ -220,14 +220,14 @@ export default function CartPage() {
                             <QuantityLabel>{quantity}</QuantityLabel>
                             <Button onClick={() => moreOfThisProduct(product._id)}>+</Button>
                           </td>
-                          <td>${formatPrice(quantity * product.price)}</td>
+                          <td>${formatPrice(quantity * product.price)} COP</td>
                         </tr>
                       );
                     })}
                     <tr>
                       <td></td>
                       <td></td>
-                      <td>Total: ${formatPrice(total)}</td>
+                      <td>Total: ${formatPrice(total)} COP</td>
                     </tr>
                   </tbody>
                 </Table>
