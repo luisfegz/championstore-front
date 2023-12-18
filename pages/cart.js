@@ -35,7 +35,7 @@ const ProductImageBox = styled.div`
   align-items: center;
   justify-content: center;
   border-radius: 10px;
-  img{
+  img {
     max-width: 60px;
     max-height: 60px;
   }
@@ -43,7 +43,7 @@ const ProductImageBox = styled.div`
     padding: 10px;
     width: 100px;
     height: 100px;
-    img{
+    img {
       max-width: 80px;
       max-height: 80px;
     }
@@ -79,9 +79,10 @@ export default function CartPage() {
 
   useEffect(() => {
     if (cartProducts.length > 0) {
-      axios.post('/api/cart', { ids: cartProducts }).then(response => {
-        setProducts(response.data);
-      });
+      axios.post('/api/cart', { ids: cartProducts })
+        .then(response => {
+          setProducts(response.data);
+        });
     } else {
       setProducts([]);
     }
@@ -119,39 +120,44 @@ export default function CartPage() {
   }
 
   function getCartText() {
-    let cartText = '';
-    for (const product of products) {
+    let cartText = products.map(product => {
       const quantity = cartProducts.filter(id => id === product._id).length;
-      cartText += '- ' + product.title + ' (Cantidad: ' + quantity + ', Precio: ' + formatPrice(quantity * product.price) + ' COP)\\n';
-    }
+      return `- ${product.title} (Cantidad: ${quantity}, Precio: ${formatPrice(quantity * product.price)} COP)`;
+    }).join("%0a");
 
     let shippingCost = city === 'Cali' ? DOMICILIO_CALI : 7000;
-    cartText += '\\nTotal: $' + formatPrice(total + shippingCost) + ' COP\\n';
-    cartText += 'Domicilio: $' + formatPrice(shippingCost) + ' COP\\n';
-    cartText += 'Domicilios a todo el País\\n';
+    cartText += `%0a%0aTotal: $${formatPrice(total + shippingCost)} COP`;
+    cartText += `%0aDomicilio: $${formatPrice(shippingCost)} COP`;
+    cartText += `%0aDomicilios a todo el País`;
     return cartText;
   }
 
   async function gotowhatsapp() {
     const nameValue = document.getElementById("name").value;
     const cityValue = document.getElementById("city").value;
-    const postalCodeValue = document.getElementById("postalCode").value;
-    const     emailValue = document.getElementById("email").value;
+    const postalCodeValue 
+        = document.getElementById("postalCode").value;
+    const emailValue = document.getElementById("email").value;
     const streetAddressValue = document.getElementById("streetAddress").value;
     const countryValue = document.getElementById("country").value;
     const cartText = getCartText();
 
     const streetAddressEncoded = encodeURIComponent(streetAddressValue);
 
-    const url = "https://wa.me/3023639624?text="
-      + "Hola ¡Champion Store! Estos son mis datos de compra:" + "%0a"
-      + "Nombre: " + nameValue + "%0a"
-      + "Ciudad: " + cityValue + "%0a"
-      + "Código postal: " + postalCodeValue + "%0a"
-      + "Email: " + emailValue + "%0a"
-      + "Dirección: " + streetAddressEncoded + "%0a"
-      + "País: " + countryValue + "%0a%0a"
-      + "Productos: " + "%0a" + cartText;
+    const message = [
+        "Hola ¡Champion Store! Estos son mis datos de compra:",
+        `Nombre: ${nameValue}`,
+        `Ciudad: ${cityValue}`,
+        `Código postal: ${postalCodeValue}`,
+        `Email: ${emailValue}`,
+        `Dirección: ${streetAddressEncoded}`,
+        `País: ${countryValue}`,
+        "",
+        "Productos:",
+        cartText
+    ].join("%0a");
+
+    const url = `https://wa.me/3023639624?text=${message}`;
   
     window.open(url, '_blank').focus();
   }
