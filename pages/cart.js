@@ -221,14 +221,14 @@ export default function CartPage() {
                             <QuantityLabel>{quantity}</QuantityLabel>
                             <Button onClick={() => moreOfThisProduct(product._id)}>+</Button>
                           </td>
-                          <td>${formatPrice(quantity * product.price)} COP</td>
+                          <td>${formatPrice(quantity * product.price)}</td>
                         </tr>
                       );
                     })}
                     <tr>
                       <td></td>
                       <td></td>
-                      <td>Total: ${formatPrice(total)} COP</td>
+                      <td>Total: ${formatPrice(total)}</td>
                     </tr>
                   </tbody>
                 </Table>
@@ -257,3 +257,4 @@ export default function CartPage() {
     </>
   );
 }
+    
