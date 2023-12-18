@@ -64,7 +64,7 @@ const CityHolder = styled.div`
   gap: 5px;
 `;
 
-const COSTO_DOMICILIO = 8000;
+const DOMICILIO = 7000;
 
 export default function CartPage() {
   const { cartProducts, addProduct, removeProduct, clearCart } = useContext(CartContext);
@@ -124,15 +124,15 @@ export default function CartPage() {
       return `- ${product.title} (Cantidad: ${quantity}, Precio: ${formatPrice(quantity * product.price)} COP)`;
     }).join("%0a");
 
-    cartText += `%0a%0aTotal: $${formatPrice(total + COSTO_DOMICILIO)} COP`;
-    cartText += `%0aDomicilio: $${formatPrice(COSTO_DOMICILIO)} COP`;
-    // Comentario sobre el domicilio
-    cartText += `%0a%0a*El domicilio en la ciudad de Cali tiene un valor de $8000 COP. Para otras partes, se acuerda con la empresa de despacho.*`;
+    let shippingCost = DOMICILIO;
+    cartText += `%0a%0aTotal: $${formatPrice(total + shippingCost)} COP`;
+    cartText += `%0aDomicilio: $${formatPrice(shippingCost)} COP`;
     return cartText;
   }
 
   async function gotowhatsapp() {
-    const nameValue = document.getElementById("city").value;
+    const nameValue = document.getElementById("name").value;
+    const cityValue = document.getElementById("city").value;
     const postalCodeValue = document.getElementById("postalCode").value;
     const emailValue = document.getElementById("email").value;
     const streetAddressValue = document.getElementById("streetAddress").value;
@@ -165,7 +165,7 @@ export default function CartPage() {
     total += quantity * product.price;
   });
 
-  total += COSTO_DOMICILIO;
+  total += shippingCost;
 
   if (isSuccess) {
     return (
