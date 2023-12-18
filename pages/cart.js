@@ -64,7 +64,6 @@ const CityHolder = styled.div`
   gap: 5px;
 `;
 
-// Constante para el costo de domicilio en Cali
 const DOMICILIO_CALI = 5000;
 
 export default function CartPage() {
@@ -99,6 +98,10 @@ export default function CartPage() {
     }
   }, []);
 
+  function formatPrice(value) {
+    return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+  }
+
   function moreOfThisProduct(id) {
     addProduct(id);
   }
@@ -107,60 +110,17 @@ export default function CartPage() {
     removeProduct(id);
   }
 
-  async function goToPayment() {
-    const response = await axios.post('/api/checkout', {
-      name, email, city, postalCode, streetAddress, country, cartProducts,
-    });
-    if (response.data.url) {
-      window.location = response.data.url;
-    }
-  }
-
-  function getCartText() {
-    let cartText = '';
-    for (const product of products) {
-      const quantity = cartProducts.filter(id => id === product._id).length;
-      cartText += '- ' + product.title + ' (Cantidad: ' + quantity + ', Precio: ' + (quantity * product.price + 'COP') + ')%0a';
-    }
-
-    let domicilio = city === 'Cali' ? DOMICILIO_CALI : 7000; // Ajuste de domicilio basado en la ciudad
-    cartText += '%0a' + 'Total: $' + (total + domicilio) + ' COP%0a';
-    cartText += 'Domicilio: $' + domicilio + ' COP%0a';
-    cartText += 'Domicilios a todo el País %0a';
-    return cartText;
-  }
-
-  async function gotowhatsapp() {
-    const nameValue = document.getElementById("name").value;
-    const cityValue = document.getElementById("city")    .value;
-    const postalCodeValue = document.getElementById("postalCode").value;
-    const emailValue = document.getElementById("email").value;
-    const streetAddressValue = document.getElementById("streetAddress").value;
-    const countryValue = document.getElementById("country").value;
-    const cartText = getCartText();
-
-    const streetAddressEncoded = encodeURIComponent(streetAddressValue);
-
-    const url = "https://wa.me/3023639624?text="
-      + "Hola ¡Champion Store! Estos son mis datos de compra:" + "%0a"
-      + "Nombre: " + nameValue + "%0a"
-      + "Ciudad: " + cityValue + "%0a"
-      + "Código postal: " + postalCodeValue + "%0a"
-      + "Email: " + emailValue + "%0a"
-      + "Dirección: " + streetAddressEncoded + "%0a"
-      + "País: " + countryValue + "%0a%0a"
-      + "Productos: " + "%0a" + cartText;
-  
-    window.open(url, '_blank').focus();
-  }
-
   let total = 0;
   for (const productId of cartProducts) {
-    const price = products.find(p => p._id === productId)?.price || 0;
-    total += price;
+    const product = products.find(p => p._id === productId);
+    const quantity = cartProducts.filter(id => id === productId).length;
+    if (product) {
+      total += quantity * product.price;
+    }
   }
 
-  total += city === 'Cali' ? DOMICILIO_CALI : 7000;
+  const shippingCost = city === 'Cali' ? DOMICILIO_CALI : 7000;
+  total += shippingCost;
 
   if (isSuccess) {
     return (
@@ -187,96 +147,61 @@ export default function CartPage() {
           <RevealWrapper delay={0}>
             <Box>
               <h2>Cart</h2>
-              {!cartProducts?.length && (
-                <div>Your cart is empty</div>
-              )}
-              {products?.length > 0 && (
+              {!cartProducts.length && <div>Your cart is empty</div>}
+              {products.length > 0 && (
                 <Table>
                   <thead>
                     <tr>
                       <th>Product</th>
-                      <th>Quantity</th>
+                                            <th>Quantity</th>
                       <th>Price</th>
                     </tr>
                   </thead>
                   <tbody>
-                    {products.map(product => (
-                      <tr key={product._id}>
-                        <td>
-                          <ProductImageBox>
-                            <img src={product.images[0]} alt={product.title}/>
-                          </ProductImageBox>
-                          {product.title}
-                        </td>
-                        <td>
-                          <Button 
-                            onClick={() => lessOfThisProduct(product._id)}
-                          >-</Button>
-                          <QuantityLabel>
-                            {cartProducts.filter(id => id === product._id).length}
-                          </QuantityLabel>
-                          <Button 
-                            onClick={() => moreOfThisProduct(product._id)}
-                          >+</Button>
-                        </td>
-                        <td>
-                          ${cartProducts.filter(id => id === product._id).length * product.price}
-                        </td>
-                      </tr>
-                    ))}
+                    {products.map(product => {
+                      const quantity = cartProducts.filter(id => id === product._id).length;
+                      return (
+                        <tr key={product._id}>
+                          <td>
+                            <ProductImageBox>
+                              <img src={product.images[0]} alt={product.title}/>
+                            </ProductImageBox>
+                            {product.title}
+                          </td>
+                          <td>
+                            <Button onClick={() => lessOfThisProduct(product._id)}>-</Button>
+                            <QuantityLabel>{quantity}</QuantityLabel>
+                            <Button onClick={() => moreOfThisProduct(product._id)}>+</Button>
+                          </td>
+                          <td>
+                            ${formatPrice(quantity * product.price)}
+                          </td>
+                        </tr>
+                      );
+                    })}
                     <tr>
                       <td></td>
-                      <td></td>
-                      <td>Total: ${total}</td>
+                      <td>Total:</td>
+                      <td>${formatPrice(total)}</td>
                     </tr>
                   </tbody>
                 </Table>
               )}
             </Box>
           </RevealWrapper>
-          {!!cartProducts?.length && (
+          {cartProducts.length > 0 && (
             <RevealWrapper delay={100}>
               <Box>
                 <h2>Order information</h2>
-                <Input type="text"
-                  id="name"
-                  placeholder="Name" 
-                  value={name}
-                  name="name" 
-                  onChange={ev => setName(ev.target.value)}/>
+                <Input type="text" id="name" placeholder="Name" value={name} onChange={e => setName(e.target.value)} />
                 <CityHolder>
-                  <Input type="text"
-                    id="city"
-                    placeholder="City" 
-                    value={city}
-                    name="city" 
-                    onChange={ev => setCity(ev.target.value)} />
-                  <Input type="text"
-                    id="postalCode"
-                    placeholder="PostalCode" 
-                    value={postalCode}
-                    name="postalCode" 
-                    onChange={ev => setPostalCode(ev.target.value)} />
+                  <Input type="text" id="city" placeholder="City" value={city} onChange={e => setCity(e.target.value)} />
+                  <Input type="text" id="postalCode" placeholder="Postal Code" value={postalCode} onChange={e => setPostalCode(e.target.value)} />
                 </CityHolder>
-                <Input type="text"
-                    id="email"
-                    placeholder="Email"
-                    value={email}
-                    name="email" 
-                    onChange={ev => setEmail(ev.target.value)}/>
-                <Input type="text"
-                  id="streetAddress"
-                  placeholder="Street Address" 
-                  value={streetAddress}
-                  name="streetAddress" 
-                  onChange={ev => setStreetAddress(ev.target.value)}/>
-                <Input type="text"
-                  id="country"
-                  placeholder="Country" 
-                  value={country}
-                  name="country" 
-                  onChange={ev => setCountry(ev.target.value)}/>
-                                  <Button black block onClick={gotowhatsapp}>
+                <Input type="text" id="email" placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} />
+                <Input type="text" id="streetAddress" placeholder="Street Address" value={streetAddress} onChange={e => setStreetAddress(e.target.value)} />
+                <Input type="text" id="country" placeholder="Country" value={country} onChange={e => setCountry(e.target.value)} />
+                <Button onClick={() => {/* Logic to handle order submission */}}>
                   Continue to WhatsApp Order
                 </Button>
               </Box>
@@ -284,8 +209,6 @@ export default function CartPage() {
           )}
         </ColumnsWrapper>
       </Center>
-      <br />
-      <br />
       <Footer />
     </>
   );
