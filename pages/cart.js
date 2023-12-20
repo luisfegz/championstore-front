@@ -204,8 +204,9 @@ export default function CartPage() {
                     </tr>
                   </thead>
                   <tbody>
-                    {products.map(product => {
-                      const quantity = cartProducts.filter(id => id === product._id).length;
+                    {products.map((product) => {
+                      const quantity = cartProducts.filter((id) => id === product._id).length;
+                      total += quantity * product.price; // Asegúrate de calcular el total correctamente
                       return (
                         <tr key={product._id}>
                           <td>
@@ -215,9 +216,9 @@ export default function CartPage() {
                             {product.title}
                           </td>
                           <td>
-                            <Button onClick={() => lessOfThisProduct(product._id)}>-</Button>
+                            <StyledButton onClick={() => removeProduct(product._id)}>-</StyledButton>
                             <QuantityLabel>{quantity}</QuantityLabel>
-                            <Button onClick={() => moreOfThisProduct(product._id)}>+</Button>
+                            <StyledButton onClick={() => addProduct(product._id)}>+</StyledButton>
                           </td>
                           <td>${formatPrice(quantity * product.price)} COP</td>
                         </tr>
