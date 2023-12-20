@@ -9,7 +9,6 @@ import Table from "@/components/Table";
 import Input from "@/components/Input";
 import { RevealWrapper } from "next-reveal";
 import Footer from "@/components/Footer";
-
 const ColumnsWrapper = styled.div`
   display: grid;
   grid-template-columns: 1fr;
@@ -19,13 +18,11 @@ const ColumnsWrapper = styled.div`
   gap: 40px;
   margin-top: 40px;
 `;
-
 const Box = styled.div`
   background-color: #fff;
   border-radius: 10px;
   padding: 30px;
 `;
-
 const ProductImageBox = styled.div`
   width: 70px;
   height: 100px;
@@ -49,7 +46,6 @@ const ProductImageBox = styled.div`
     }
   }
 `;
-
 const QuantityLabel = styled.span`
   padding: 0 15px;
   display: block;
@@ -58,15 +54,12 @@ const QuantityLabel = styled.span`
     padding: 0 10px;
   }
 `;
-
 const CityHolder = styled.div`
   display: flex;
   gap: 5px;
 `;
-
 const DOMICILIO_CALI = 6500;
 const DOMICILIO_OTRAS_CIUDADES = 15000;
-
 export default function CartPage() {
   const { cartProducts, addProduct, removeProduct, clearCart } = useContext(CartContext);
   const [products, setProducts] = useState([]);
@@ -77,7 +70,6 @@ export default function CartPage() {
   const [streetAddress, setStreetAddress] = useState('');
   const [country, setCountry] = useState('');
   const [isSuccess, setIsSuccess] = useState(false);
-
   useEffect(() => {
     if (cartProducts.length > 0) {
       axios.post('/api/cart', { ids: cartProducts }).then(response => {
@@ -87,7 +79,6 @@ export default function CartPage() {
       setProducts([]);
     }
   }, [cartProducts]);
-
   useEffect(() => {
     if (typeof window === 'undefined') {
       return;
@@ -97,19 +88,15 @@ export default function CartPage() {
       clearCart();
     }
   }, []);
-
   function moreOfThisProduct(id) {
     addProduct(id);
   }
-
   function lessOfThisProduct(id) {
     removeProduct(id);
   }
-
   function formatPrice(value) {
     return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
   }
-
   async function goToPayment() {
     const response = await axios.post('/api/checkout', {
       name, email, city, postalCode, streetAddress, country, cartProducts,
@@ -118,7 +105,6 @@ export default function CartPage() {
       window.location.href = response.data.url;
     }
   }
-
   function getCartText() {
     let cartText = products.map(product => {
       const quantity = cartProducts.filter(id => id === product._id).length;
@@ -127,6 +113,7 @@ export default function CartPage() {
 
     let shippingCost = city === 'Cali' ? DOMICILIO_CALI : DOMICILIO_OTRAS_CIUDADES;
     cartText += `%0a%0aTotal: $${formatPrice(total + shippingCost)} COP`;
+    cartText += `%0aDomicilio en Cali: $${formatPrice(shippingCost)} COP`;
     cartText += `%0aDomicilio: $${formatPrice(shippingCost)} COP`;
     return cartText;
   }
@@ -139,9 +126,7 @@ export default function CartPage() {
     const streetAddressValue = document.getElementById("streetAddress").value;
     const countryValue = document.getElementById("country").value;
     const cartText = getCartText();
-
     const streetAddressEncoded = encodeURIComponent(streetAddressValue);
-
     const message = [
         "Hola ¡Champion Store! Estos son mis datos de compra:",
         `Nombre: ${nameValue}`,
@@ -154,20 +139,16 @@ export default function CartPage() {
         "Productos:",
         cartText
     ].join("%0a");
-
     const url = `https://wa.me/3023639624?text=${message}`;
   
     window.open(url, '_blank').focus();
   }
-
   let total = 0;
   products.forEach(product => {
     const quantity = cartProducts.filter(id => id === product._id).length;
     total += quantity * product.price;
   });
-
   
-
   if (isSuccess) {
     return (
       <>
@@ -184,7 +165,6 @@ export default function CartPage() {
       </>
     );
   }
-
   return (
     <>
       <Header />
@@ -204,9 +184,8 @@ export default function CartPage() {
                     </tr>
                   </thead>
                   <tbody>
-                    {products.map((product) => {
-                      const quantity = cartProducts.filter((id) => id === product._id).length;
-                      total += quantity * product.price; // Asegúrate de calcular el total correctamente
+                    {products.map(product => {
+                      const quantity = cartProducts.filter(id => id === product._id).length;
                       return (
                         <tr key={product._id}>
                           <td>
@@ -216,18 +195,18 @@ export default function CartPage() {
                             {product.title}
                           </td>
                           <td>
-                            <StyledButton onClick={() => removeProduct(product._id)}>-</StyledButton>
+                            <Button onClick={() => lessOfThisProduct(product._id)}>-</Button>
                             <QuantityLabel>{quantity}</QuantityLabel>
-                            <StyledButton onClick={() => addProduct(product._id)}>+</StyledButton>
+                            <Button onClick={() => moreOfThisProduct(product._id)}>+</Button>
                           </td>
-                          <td>${formatPrice(quantity * product.price)} COP</td>
+                          <td>${formatPrice(quantity * product.price)}</td>
                         </tr>
                       );
                     })}
                     <tr>
                       <td></td>
                       <td></td>
-                      <td>Total: ${formatPrice(total)} COP</td>
+                      <td>Total: ${formatPrice(total)}</td>
                     </tr>
                   </tbody>
                 </Table>
