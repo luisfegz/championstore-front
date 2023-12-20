@@ -59,7 +59,7 @@ const CityHolder = styled.div`
   gap: 5px;
 `;
 const DOMICILIO_CALI = 6500;
-const DOMICILIO_OTRAS_CIUDADES = 15000;
+const DOMICILIO_OTRAS_CIUDADES = 20000;
 export default function CartPage() {
   const { cartProducts, addProduct, removeProduct, clearCart } = useContext(CartContext);
   const [products, setProducts] = useState([]);
@@ -113,7 +113,7 @@ export default function CartPage() {
 
     let shippingCost = city === 'Cali' ? DOMICILIO_CALI : DOMICILIO_OTRAS_CIUDADES;
     cartText += `%0a%0aTotal: $${formatPrice(total + shippingCost)} COP`;
-    cartText += `%0aDomicilio en Cali: $${formatPrice(shippingCost)} COP`;
+    cartText += `%0aDomicilio: $${formatPrice(shippingCost)} COP`;
     cartText += `%0aDomicilio: $${formatPrice(shippingCost)} COP`;
     return cartText;
   }
