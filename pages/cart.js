@@ -174,6 +174,10 @@ export default function CartPage() {
         <br />
         <br />
         <br />
+        <br />
+        <br />
+        <br />
+        <br />
         <FooterAnimated />
       </>
     );
@@ -244,6 +248,14 @@ export default function CartPage() {
           )}
         </ColumnsWrapper>
       </Center>
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
       <br />
       <br />
       <br />
