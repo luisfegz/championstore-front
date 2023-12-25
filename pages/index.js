@@ -7,7 +7,7 @@ import {WishedProduct} from "@/models/WishedProduct";
 import {getServerSession} from "next-auth";
 import {authOptions} from "@/pages/api/auth/[...nextauth]";
 import {Setting} from "@/models/Setting";
-import Footer from "@/components/Footer";
+import FooterAnimated from "@/components/FooterAnimated";
 
 export default function HomePage({featuredProduct,newProducts,wishedNewProducts}) {
   return (
@@ -17,7 +17,13 @@ export default function HomePage({featuredProduct,newProducts,wishedNewProducts}
       <NewProducts products={newProducts} wishedProducts={wishedNewProducts} />
       <br />
       <br />
-      <Footer />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <FooterAnimated />
     </div>
   );
 }
