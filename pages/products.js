@@ -8,7 +8,7 @@ import Title from "@/components/Title";
 import {getServerSession} from "next-auth";
 import {authOptions} from "@/pages/api/auth/[...nextauth]";
 import {WishedProduct} from "@/models/WishedProduct";
-import Footer from "@/components/Footer";
+import FooterAnimated from "@/components/FooterAnimated";
 
 export default function ProductsPage({products,wishedProducts}) {
   return (
@@ -20,7 +20,13 @@ export default function ProductsPage({products,wishedProducts}) {
       </Center>
       <br />
       <br />
-      <Footer />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <br />
+      <FooterAnimated />
     </>
   );
 }
