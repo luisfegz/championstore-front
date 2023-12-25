@@ -160,9 +160,9 @@ export default function FooterAnimated() {
                     <Menu>
                         <li><a href={'/'}>Home</a></li>
                         <li><a href={'/products'}>All products</a></li>
-                        <li><a href="#">Categories</a></li>
-                        <li><a href="#">Account</a></li>
-                        <li><a href="#">Cart</a></li>
+                        <li><a href={'/categories'}>Categories</a></li>
+                        <li><a href={'/account'}>Account</a></li>
+                        <li><a href={'/cart'}>Cart</a></li>
                     </Menu>
                     <p>© Champion Store 2024</p>
                 </FFooter>
