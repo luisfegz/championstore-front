@@ -25,6 +25,7 @@ const FFooter = styled.footer`
 `;
 
 const SocialIcon = styled.ul`
+    left: -20px;
     position: relative;
     display: flex;
     justify-content: center;
