@@ -48,7 +48,7 @@ const SocialIcon = styled.ul`
 `;
 
 const Menu = styled.ul`
-    left: -10px;
+    left: -20px;
     position: relative;
     display: flex;
     justify-content: center;
