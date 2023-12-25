@@ -8,6 +8,7 @@ import { Product } from "@/models/Product";
 import axios from "axios";
 import { useEffect, useState } from "react";
 import styled from "styled-components";
+import FooterAnimated from "@/components/FooterAnimated";
 
 const CategoryHeader = styled.div`
     display: flex;
@@ -151,6 +152,15 @@ export default function CategoryPage({
                     </div>
                 )}
             </Center>
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <FooterAnimated />
         </>
     );
 }
