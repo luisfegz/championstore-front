@@ -7,7 +7,7 @@ import axios from "axios";
 import ProductsGrid from "@/components/ProductsGrid";
 import { debounce } from "lodash";
 import Spinner from "@/components/Spinner";
-import Footer from "@/components/Footer";
+import FooterAnimated from "@/components/FooterAnimated";
 
 const SearchInput = styled(Input)`
     padding: 5px 10px;
@@ -67,8 +67,14 @@ export default function SearchPage() {
                 )}
             </Center>
             <br />
-            <br />
-            <Footer />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <FooterAnimated />
         </>
     );
 }
