@@ -76,7 +76,7 @@ const Waves = styled.div``;
 
 const Wave = styled.div`
     position: absolute;
-    top: -100px;
+    top: -98px;
     left: 0;
     width: 100%;
     height: 100px;
