@@ -162,7 +162,15 @@ export default function CartPage() {
             </Box>
           </ColumnsWrapper>
         </Center>
-        <Footer />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <FooterAnimated />
       </>
     );
   }
