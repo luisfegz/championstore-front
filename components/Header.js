@@ -10,7 +10,7 @@ import CartShop from "./icons/CartShop";
 const StyledHeader = styled.header`
   background-color: #222;
   position: sticky;
-  top: 0;
+  top: -2px;
   z-index: 10;
 `;
 
