@@ -33,6 +33,7 @@ const SocialIcon = styled.ul`
     align-items: center;
     margin: 10px 0;
     flex-wrap: wrap;
+    text-align: center; /* Added to center */
     li {
         list-style: none;
     }
@@ -55,6 +56,7 @@ const Menu = styled.ul`
     align-items: center;
     margin: 10px 0;
     flex-wrap: wrap;
+    text-align: center; /* Added to center */
     li {
         list-style: none;
     }
