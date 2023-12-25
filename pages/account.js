@@ -13,7 +13,7 @@ import Spinner from "@/components/Spinner";
 import ProductBox from "@/components/ProductBox";
 import Tabs from "@/components/Tabs";
 import SingleOrder from "@/components/SingleOrder";
-import Footer from "@/components/Footer";
+import FooterAnimated from "@/components/FooterAnimated";
 
 const ColsWrapper = styled.div`
     display: grid;
@@ -221,7 +221,13 @@ export default function AccountPage() {
             </Center>
             <br />
             <br />
-            <Footer />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <br />
+            <FooterAnimated />
         </>
     );
 }
