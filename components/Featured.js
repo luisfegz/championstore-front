@@ -6,7 +6,6 @@ import FlyingButton from "@/components/FlyingButton";
 import {RevealWrapper} from 'next-reveal'
 
 const Bg = styled.div`
-  top: -2px;
   background-color: #222;
   color:#fff;
   padding: 50px 0;
