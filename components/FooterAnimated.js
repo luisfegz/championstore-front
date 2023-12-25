@@ -14,10 +14,8 @@ const FFooter = styled.footer`
     padding: 20px 50px;
     display: flex;
     align-items: center;
-    justify-content: center;
     flex-direction: column;
     p {
-        justify-content: center;
         color: #fff;
         text-align: center;
         margin-top: 15px;
