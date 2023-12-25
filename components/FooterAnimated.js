@@ -1,4 +1,5 @@
 import styled, { css, keyframes } from "styled-components";
+import Script from 'next/script';
 
 const AnimatedFooter = styled.div`
     margin: 0;
@@ -154,8 +155,6 @@ export default function FooterAnimated() {
                     </Waves>
                     <SocialIcon>
                         <li><a href="https://www.facebook.com/friends/requests/?profile_id=100083593505150" target="_blank" title="Facebook (El enlace se abre en una nueva pestaña)"><ion-icon name="logo-facebook"></ion-icon></a></li>
-                        {/* <li><a href="#"><ion-icon name="logo-twitter"></ion-icon></a></li>
-                        <li><a href="#"><ion-icon name="logo-linkedin"></ion-icon></a></li> */}
                         <li><a href="https://www.instagram.com/championstore.col/" target="_blank" title="Instagram (El enlace se abre en una nueva pestaña)"><ion-icon name="logo-instagram"></ion-icon></a></li>
                     </SocialIcon>
                     <Menu>
@@ -167,8 +166,14 @@ export default function FooterAnimated() {
                     </Menu>
                     <p>© Champion Store 2024</p>
                 </FFooter>
-                <script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-                <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+                <Script
+                    type="module"
+                    src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"
+                />
+                <Script
+                    nomodule
+                    src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"
+                />
             </AnimatedFooter>
         </>
     );
