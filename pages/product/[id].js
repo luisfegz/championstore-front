@@ -31,6 +31,10 @@ const Price = styled.span`
   font-size: 1.4rem;
 `;
 
+function formatPriceWithDot(value) {
+  return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+}
+
 export default function ProductPage({ product }) {
   return (
     <>
@@ -45,7 +49,7 @@ export default function ProductPage({ product }) {
             <p>{product.description}</p>
             <PriceRow>
               <div>
-                <Price>${product.price.toLocaleString(undefined, { useGrouping: true })}</Price>
+                <Price>${formatPriceWithDot(product.price)}</Price>
               </div>
               <div>
                 <FlyingButton main _id={product._id} src={product.images?.[0]}>
