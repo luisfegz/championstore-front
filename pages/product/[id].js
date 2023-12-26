@@ -20,11 +20,13 @@ const ColWrapper = styled.div`
   gap: 40px;
   margin: 40px 0;
 `;
+
 const PriceRow = styled.div`
   display: flex;
   gap: 20px;
   align-items: center;
 `;
+
 const Price = styled.span`
   font-size: 1.4rem;
 `;
@@ -43,7 +45,7 @@ export default function ProductPage({product}) {
             <p>{product.description}</p>
             <PriceRow>
               <div>
-                <Price>${product.price}</Price>
+                <Price>${product.price.toLocaleString()}</Price>
               </div>
               <div>
                 <FlyingButton main _id={product._id} src={product.images?.[0]}>
