@@ -8,12 +8,14 @@ import {getServerSession} from "next-auth";
 import {authOptions} from "@/pages/api/auth/[...nextauth]";
 import {Setting} from "@/models/Setting";
 import FooterAnimated from "@/components/FooterAnimated";
+import Carousel from "@/components/Carousel";
 
 export default function HomePage({featuredProduct,newProducts,wishedNewProducts}) {
   return (
     <div>
       <Header />
       <Featured product={featuredProduct} />
+      <Carousel />
       <NewProducts products={newProducts} wishedProducts={wishedNewProducts} />
       <br />
       <br />
