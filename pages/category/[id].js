@@ -169,8 +169,6 @@ export default function CategoryPage({
             <br />
             <br />
             <br />
-            <br />
-            <br />
             <FooterAnimated />
         </>
     );
