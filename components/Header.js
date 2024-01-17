@@ -23,6 +23,7 @@ const Logo = styled(Link)`
 const Wrapper = styled.div`
     display: flex;
     justify-content: space-between;
+    align-items: center;
     padding: 20px 0;
 `;
 
