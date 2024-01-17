@@ -99,9 +99,8 @@ const SideIcons = styled.div`
 `;
 
 export default function Header() {
-    const { cartProducts } = useContext(CartContext);
+    const {cartProducts} = useContext(CartContext);
     const [mobileNavActive, setMobileNavActive] = useState(false);
-
     return (
         <StyledHeader>
             <Center>
@@ -109,16 +108,17 @@ export default function Header() {
                     <Logo href={'/'}>
                           <img src="/favicon.ico" alt="Champion Store Logo" style={{ height: '30px' }} /> 
                     </Logo>
-                    <StyledNav $mobileNavActive={mobileNavActive}>
+                    <StyledNav mobileNavActive={mobileNavActive}>
                         <NavLink href={'/'}>Home</NavLink>
                         <NavLink href={'/products'}>All products</NavLink>
                         <NavLink href={'/categories'}>Categories</NavLink>
                         <NavLink href={'/account'}>Account</NavLink>
+                        <NavLink href={'/cart'}>Cart ({cartProducts.length})</NavLink>
                     </StyledNav>
                     <SideIcons>
-                        <NavLink href={'/cart'}>
+                        <Link href={'/cart'}>
                             <CartShop />({cartProducts.length})
-                        </NavLink>
+                        </Link>
                         <Link href={'/search'}>
                             <SearchIcon />
                         </Link>
