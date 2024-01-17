@@ -72,6 +72,16 @@ export default function SearchPage() {
               <br />
               <br />
               <br />
+              <br /><br />
+              <br />
+              <br />
+              <br />
+              <br />
+              <br /><br />
+              <br />
+              <br />
+              <br />
+              <br />
               <br />
               <br />
               <FooterAnimated />
