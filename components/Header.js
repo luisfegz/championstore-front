@@ -5,6 +5,7 @@ import { useContext, useState } from "react";
 import { CartContext } from "@/components/CartContext";
 import BarsIcon from "@/components/icons/Bars";
 import SearchIcon from "@/components/icons/SearchIcon";
+import CartShop from "./icons/CartShop";
 
 const StyledHeader = styled.header`
   background-color: #222;
