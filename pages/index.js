@@ -8,11 +8,18 @@ import {getServerSession} from "next-auth";
 import {authOptions} from "@/pages/api/auth/[...nextauth]";
 import {Setting} from "@/models/Setting";
 import FooterAnimated from "@/components/FooterAnimated";
+import styled from "styled-components";
+
+const FFront = styled.div`
+  z-index: 1;
+`;
 
 export default function HomePage({featuredProduct,newProducts,wishedNewProducts}) {
   return (
     <div>
-      <Header />
+      <FFront>
+        <Header />
+      </FFront>
       <Featured product={featuredProduct} />
       <NewProducts products={newProducts} wishedProducts={wishedNewProducts} />
       <br />
