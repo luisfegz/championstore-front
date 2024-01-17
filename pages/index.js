@@ -11,7 +11,7 @@ import FooterAnimated from "@/components/FooterAnimated";
 
 export default function HomePage({featuredProduct,newProducts,wishedNewProducts}) {
   return (
-    <div>
+    <>
       <Header />
       <Featured product={featuredProduct} />
       <NewProducts products={newProducts} wishedProducts={wishedNewProducts} />
@@ -23,10 +23,8 @@ export default function HomePage({featuredProduct,newProducts,wishedNewProducts}
       <br />
       <br />
       <br />
-    </div>
-    <div>
       <FooterAnimated />
-    </div>
+    </>
   );
 }
 
