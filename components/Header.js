@@ -5,7 +5,6 @@ import { useContext, useState } from "react";
 import { CartContext } from "@/components/CartContext";
 import BarsIcon from "@/components/icons/Bars";
 import SearchIcon from "@/components/icons/SearchIcon";
-import CartShop from "./icons/CartShop";
 
 const StyledHeader = styled.header`
   background-color: #222;
@@ -13,27 +12,27 @@ const StyledHeader = styled.header`
   top: 0;
   z-index: 10;
 `;
-
-const Logo = styled.a`
-  color: #fff;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
+const Logo = styled(Link)`
+    color:#fff;
+    text-decoration:none;
+    position: relative;
+    z-index: 3;
 `;
 
 const Wrapper = styled.div`
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 20px 0;
+    display: flex;
+    justify-content: space-between;
+    padding: 20px 0;
 `;
 
 const StyledNav = styled.nav`
-  display: flex;
-  align-items: center;
-  gap: 15px;
-  @media screen and (max-width: 767px) {
-    display: ${props => props.$mobileNavActive ? 'flex' : 'none'};
+    ${props => props.mobileNavActive ? `
+        display: block;
+    ` : `
+        display: none;
+    ` }
+    
+    gap: 15px;
     position: fixed;
     top: 0;
     bottom: 0;
@@ -41,15 +40,25 @@ const StyledNav = styled.nav`
     right: 0;
     padding: 70px 20px 20px;
     background-color: #222;
-    flex-direction: column;
-  }
+    @media screen and (min-width: 768px) {
+        display: flex;
+        position: static;
+        padding: 0;
+    }
 `;
 
 const NavLink = styled(Link)`
-  color: #aaa;
-  text-decoration: none;
-  display: inline-flex;
-  align-items: center;
+    display: block;
+    color: #aaa;
+    text-decoration:none;
+    min-width: 30px;
+    padding: 10px 0;
+    svg{
+        height: 20px;
+    }
+    @media screen and (min-width: 768px) {
+        padding: 0;
+    }
 `;
 
 const NavButton = styled.button`
@@ -58,19 +67,11 @@ const NavButton = styled.button`
     height: 30px;
     border: 0;
     color: white;
-    svg {
-        width: 20px; // Tamaño base para escritorio
-        height: 20px; // Tamaño base para escritorio
-    }
     cursor: pointer;
     position: relative;
     z-index: 3;
     @media screen and (min-width: 768px) {
         display: none;
-        svg {
-            width: 24px; // Tamaño ajustado para móviles
-            height: 24px; // Tamaño ajustado para móviles
-        }
     }
 `;
 
