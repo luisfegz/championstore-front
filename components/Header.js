@@ -51,14 +51,12 @@ const StyledNav = styled.nav`
 const NavLink = styled(Link)`
     display: block;
     color: #aaa;
-    text-decoration:none;
+    text-decoration: none;
     min-width: 30px;
     padding: 10px 0;
-    svg{
-        height: 20px;
-    }
     @media screen and (min-width: 768px) {
         padding: 0;
+        display: inline-flex;
     }
 `;
 
@@ -68,11 +66,19 @@ const NavButton = styled.button`
     height: 30px;
     border: 0;
     color: white;
+     svg {
+        width: 20px; // Tamaño base para escritorio
+        height: 20px; // Tamaño base para escritorio
+    }
     cursor: pointer;
     position: relative;
     z-index: 3;
     @media screen and (min-width: 768px) {
         display: none;
+        svg {
+            width: 24px; // Tamaño ajustado para móviles
+            height: 24px; // Tamaño ajustado para móviles
+        }
     }
 `;
 
