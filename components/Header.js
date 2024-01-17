@@ -27,13 +27,11 @@ const Wrapper = styled.div`
 `;
 
 const StyledNav = styled.nav`
-    ${props => props.mobileNavActive ? `
-        display: block;
-    ` : `
-        display: none;
-    ` }
-    
-    gap: 15px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+  @media screen and (max-width: 767px) {
+    display: ${props => props.$mobileNavActive ? 'flex' : 'none'};
     position: fixed;
     top: 0;
     bottom: 0;
@@ -41,11 +39,8 @@ const StyledNav = styled.nav`
     right: 0;
     padding: 70px 20px 20px;
     background-color: #222;
-    @media screen and (min-width: 768px) {
-        display: flex;
-        position: static;
-        padding: 0;
-    }
+    flex-direction: column;
+  }
 `;
 
 const NavLink = styled(Link)`
