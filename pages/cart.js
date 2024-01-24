@@ -11,6 +11,8 @@ import { RevealWrapper } from "next-reveal";
 import DropdownSelect from "@/components/DropdownSelect";
 import DropdownSelect2 from "@/components/DropdownSelect2";
 import DropdownSelect3 from "@/components/DropdownSelect3";
+import FooterAnimated from "@/components/FooterAnimated";
+
 
 const ColumnsWrapper = styled.div`
   display: grid;
