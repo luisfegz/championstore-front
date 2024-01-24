@@ -168,7 +168,7 @@ export default function CartPage() {
       `Código postal: ${postalCodeValue}`,
       `Email: ${emailValue}`,
       `Dirección: ${streetAddressEncoded}`,
-      `País: ${countryValue}`,
+      `Departamento: ${countryValue}`,
       "",
       "Productos:",
       "",
@@ -271,19 +271,19 @@ export default function CartPage() {
             <RevealWrapper delay={100}>
               <Box>
                 <h2>Order information</h2>
-                <Input type="text" id="name" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} />
+                <Input type="text" id="name" placeholder="Nombre" value={name} onChange={(e) => setName(e.target.value)} />
                 <CityHolder>
-                  <Input type="text" id="city" placeholder="City" value={city} onChange={(e) => setCity(e.target.value)} />
-                  <Input type="text" id="postalCode" placeholder="Postal Code" value={postalCode} onChange={(e) => setPostalCode(e.target.value)} />
+                  <Input type="text" id="city" placeholder="Ciudad" value={city} onChange={(e) => setCity(e.target.value)} />
+                  <Input type="text" id="postalCode" placeholder="Código Postal" value={postalCode} onChange={(e) => setPostalCode(e.target.value)} />
                 </CityHolder>
                 <Input type="text" id="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
-                <Input type="text" id="streetAddress" placeholder="Street Address" value={streetAddress} onChange={(e) => setStreetAddress(e.target.value)} />
-                <Input type="text" id="country" placeholder="Country" value={country} onChange={(e) => setCountry(e.target.value)} />
+                <Input type="text" id="streetAddress" placeholder="Dirección" value={streetAddress} onChange={(e) => setStreetAddress(e.target.value)} />
+                <Input type="text" id="country" placeholder="Departamento" value={country} onChange={(e) => setCountry(e.target.value)} />
                 <DropdownSelect setSelectedOption={setSelectedOption} />
                 <DropdownSelect2 setSelectedOption={setSelectedOption2} />
                 <DropdownSelect3 setSelectedOption={setSelectedOption3} />
                 <Button black block onClick={gotowhatsapp}>
-                  Continue to payment
+                  Realizar pedido
                 </Button>
               </Box>
             </RevealWrapper>
