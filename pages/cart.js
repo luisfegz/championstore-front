@@ -8,7 +8,9 @@ import axios from "axios";
 import Table from "@/components/Table";
 import Input from "@/components/Input";
 import { RevealWrapper } from "next-reveal";
-import FooterAnimated from "@/components/FooterAnimated";
+import DropdownSelect from "@/components/DropdownSelect";
+import DropdownSelect2 from "@/components/DropdownSelect2";
+import DropdownSelect3 from "@/components/DropdownSelect3";
 
 const ColumnsWrapper = styled.div`
   display: grid;
@@ -61,60 +63,89 @@ const CityHolder = styled.div`
 `;
 const DOMICILIO_CALI = 6500;
 const DOMICILIO_OTRAS_CIUDADES = 20000;
+
 export default function CartPage() {
   const { cartProducts, addProduct, removeProduct, clearCart } = useContext(CartContext);
   const [products, setProducts] = useState([]);
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [city, setCity] = useState('');
-  const [postalCode, setPostalCode] = useState('');
-  const [streetAddress, setStreetAddress] = useState('');
-  const [country, setCountry] = useState('');
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [city, setCity] = useState("");
+  const [postalCode, setPostalCode] = useState("");
+  const [streetAddress, setStreetAddress] = useState("");
+  const [country, setCountry] = useState("");
   const [isSuccess, setIsSuccess] = useState(false);
+  const [selectedOption, setSelectedOption] = useState("");
+  const [selectedOption2, setSelectedOption2] = useState("");
+  const [selectedOption3, setSelectedOption3] = useState("");
+
   useEffect(() => {
     if (cartProducts.length > 0) {
-      axios.post('/api/cart', { ids: cartProducts }).then(response => {
+      axios.post("/api/cart", { ids: cartProducts }).then((response) => {
         setProducts(response.data);
       });
     } else {
       setProducts([]);
     }
   }, [cartProducts]);
+
   useEffect(() => {
-    if (typeof window === 'undefined') {
+    if (typeof window === "undefined") {
       return;
     }
-    if (window.location.href.includes('success')) {
+    if (window.location.href.includes("success")) {
       setIsSuccess(true);
       clearCart();
     }
   }, []);
+
   function moreOfThisProduct(id) {
     addProduct(id);
   }
+
   function lessOfThisProduct(id) {
     removeProduct(id);
   }
+
   function formatPrice(value) {
     return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
   }
+
   async function goToPayment() {
-    const response = await axios.post('/api/checkout', {
-      name, email, city, postalCode, streetAddress, country, cartProducts,
+    const response = await axios.post("/api/checkout", {
+      name,
+      email,
+      city,
+      postalCode,
+      streetAddress,
+      country,
+      cartProducts,
     });
     if (response.data.url) {
       window.location.href = response.data.url;
     }
   }
-  function getCartText() {
-    let cartText = products.map(product => {
-      const quantity = cartProducts.filter(id => id === product._id).length;
-      return `- ${product.title} (Cantidad: ${quantity}, Precio: ${formatPrice(quantity * product.price)} COP)`;
-    }).join("%0a");
 
-    let shippingCost = city === 'Cali' ? DOMICILIO_CALI : DOMICILIO_OTRAS_CIUDADES;
+  function getCartText(selectedOption, selectedOption2, selectedOption3) {
+    let cartText = products
+      .map((product) => {
+        const quantity = cartProducts.filter((id) => id === product._id).length;
+        return `- ${product.title} (Cantidad: ${quantity}, Precio: ${formatPrice(
+          quantity * product.price
+        )} COP)`;
+      })
+      .join("%0a");
+
+    let shippingCost = city === "Cali" ? DOMICILIO_CALI : DOMICILIO_OTRAS_CIUDADES;
+    cartText += `%0a`;
+    cartText += `%0aMedidas de productos`;
+    cartText += `%0a`;
+    cartText += `%0aTalla de calzado: ${selectedOption}`;
+    cartText += `%0aTalla de prenda superior: ${selectedOption2}`;
+    cartText += `%0aTalla de prenda inferior: ${selectedOption3}`;
     cartText += `%0a%0aTotal: $${formatPrice(total + shippingCost)} COP`;
     cartText += `%0aDomicilio: $${formatPrice(shippingCost)} COP`;
+    
+
     return cartText;
   }
 
@@ -125,30 +156,33 @@ export default function CartPage() {
     const emailValue = document.getElementById("email").value;
     const streetAddressValue = document.getElementById("streetAddress").value;
     const countryValue = document.getElementById("country").value;
-    const cartText = getCartText();
+
+    const cartText = getCartText(selectedOption, selectedOption2, selectedOption3);
     const streetAddressEncoded = encodeURIComponent(streetAddressValue);
     const message = [
-        "Hola ¡Champion Store! Estos son mis datos de compra:",
-        `Nombre: ${nameValue}`,
-        `Ciudad: ${cityValue}`,
-        `Código postal: ${postalCodeValue}`,
-        `Email: ${emailValue}`,
-        `Dirección: ${streetAddressEncoded}`,
-        `País: ${countryValue}`,
-        "",
-        "Productos:",
-        cartText
+      "Hola ¡Champion Store! Estos son mis datos de compra:",
+      `Nombre: ${nameValue}`,
+      `Ciudad: ${cityValue}`,
+      `Código postal: ${postalCodeValue}`,
+      `Email: ${emailValue}`,
+      `Dirección: ${streetAddressEncoded}`,
+      `País: ${countryValue}`,
+      "",
+      "Productos:",
+      "",
+      cartText,
     ].join("%0a");
+
     const url = `https://wa.me/3023639624?text=${message}`;
-  
-    window.open(url, '_blank').focus();
+    window.open(url, "_blank").focus();
   }
+
   let total = 0;
-  products.forEach(product => {
-    const quantity = cartProducts.filter(id => id === product._id).length;
+  products.forEach((product) => {
+    const quantity = cartProducts.filter((id) => id === product._id).length;
     total += quantity * product.price;
   });
-  
+
   if (isSuccess) {
     return (
       <>
@@ -177,10 +211,12 @@ export default function CartPage() {
         <br />
         <br />
         <br />
+        <br />
         <FooterAnimated />
       </>
     );
   }
+
   return (
     <>
       <Header />
@@ -200,8 +236,8 @@ export default function CartPage() {
                     </tr>
                   </thead>
                   <tbody>
-                    {products.map(product => {
-                      const quantity = cartProducts.filter(id => id === product._id).length;
+                    {products.map((product) => {
+                      const quantity = cartProducts.filter((id) => id === product._id).length;
                       return (
                         <tr key={product._id}>
                           <td>
@@ -233,15 +269,20 @@ export default function CartPage() {
             <RevealWrapper delay={100}>
               <Box>
                 <h2>Order information</h2>
-                <Input type="text" id="name" placeholder="Name" value={name} onChange={e => setName(e.target.value)} />
+                <Input type="text" id="name" placeholder="Name" value={name} onChange={(e) => setName(e.target.value)} />
                 <CityHolder>
-                  <Input type="text" id="city" placeholder="City" value={city} onChange={e => setCity(e.target.value)} />
-                  <Input type="text" id="postalCode" placeholder="Postal Code" value={postalCode} onChange={e => setPostalCode(e.target.value)} />
+                  <Input type="text" id="city" placeholder="City" value={city} onChange={(e) => setCity(e.target.value)} />
+                  <Input type="text" id="postalCode" placeholder="Postal Code" value={postalCode} onChange={(e) => setPostalCode(e.target.value)} />
                 </CityHolder>
-                <Input type="text" id="email" placeholder="Email" value={email} onChange={e => setEmail(e.target.value)} />
-                <Input type="text" id="streetAddress" placeholder="Street Address" value={streetAddress} onChange={e => setStreetAddress(e.target.value)} />
-                <Input type="text" id="country" placeholder="Country" value={country} onChange={e => setCountry(e.target.value)} />
-                <Button black block onClick={gotowhatsapp}>Continue to payment</Button>
+                <Input type="text" id="email" placeholder="Email" value={email} onChange={(e) => setEmail(e.target.value)} />
+                <Input type="text" id="streetAddress" placeholder="Street Address" value={streetAddress} onChange={(e) => setStreetAddress(e.target.value)} />
+                <Input type="text" id="country" placeholder="Country" value={country} onChange={(e) => setCountry(e.target.value)} />
+                <DropdownSelect setSelectedOption={setSelectedOption} />
+                <DropdownSelect2 setSelectedOption={setSelectedOption2} />
+                <DropdownSelect3 setSelectedOption={setSelectedOption3} />
+                <Button black block onClick={gotowhatsapp}>
+                  Continue to payment
+                </Button>
               </Box>
             </RevealWrapper>
           )}
@@ -266,7 +307,6 @@ export default function CartPage() {
       <br />
       <br />
       <br />
-      <FooterAnimated />
     </>
   );
 }
