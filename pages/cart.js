@@ -309,6 +309,7 @@ export default function CartPage() {
       <br />
       <br />
       <br />
+      <FooterAnimated />
     </>
   );
 }
